@@ -14,7 +14,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: ${lighten(0.45, 'gray')};  
+    background-color: 'gray';  
+  }
+
+
+  li {
+    list-style: none;
   }
 
 `
