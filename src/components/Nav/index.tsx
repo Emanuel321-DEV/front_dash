@@ -33,9 +33,7 @@ export function Nav ({ display }: NavProps){
 
                     <nav>
                         <ul> 
-                            <li>
-                                <Link className="nav-link" to="/dashboard"> <DashboardIcon className="nav-icon" color="secondary"/> <h3>Dashboard</h3> </Link> 
-                            </li>
+                          
                             <li>
                                 <Link className="nav-link" to="/company">  <BusinessIcon className="nav-icon" color="secondary"/> <h3>Companies</h3> </Link>
                             </li>

@@ -4,7 +4,7 @@ import ImgSignUp from "../images/img2.svg";
 
 import { useForm } from 'react-hook-form';
 
-import { useState } from 'react'; 
+import history from '../history'
 
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -27,6 +27,12 @@ export function SignUp (){
         const response = await create('user', { email, password });
 
         const data = await response.data;
+
+        if(data){
+            history.push('/company')
+
+            window.location.reload()
+        }
 
     }
 

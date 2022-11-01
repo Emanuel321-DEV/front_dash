@@ -3,7 +3,6 @@ import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { Company } from './pages/company';
 import { Contact } from './pages/contact';
-import { Dashboard } from './pages/dashboard';
 import { Local } from './pages/local';
 import { Responsible } from './pages/responsible';
 import { SignIn } from './pages/signIn';
@@ -28,7 +27,6 @@ function App() {
             <Route path="/" element={<SignIn />}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
 
-            <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/company" element={<Company />}></Route>
 
             <Route path="/local" element={<Local />}></Route>

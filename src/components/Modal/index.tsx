@@ -1,21 +1,17 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Checkbox, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { api } from '../../services/api';
 import { useContext } from 'react';
 import { CrudContext } from '../../contexts/ApiContext';
-import { Add } from '@mui/icons-material';
+import { AddCircle, Edit, Delete } from '@mui/icons-material';
 
 interface BasicModalProps {
     path: string;
     httpMethod: string;
-    createEntity: any; 
-    updateEntity: any;
+    entityProps: any; 
 }
 
 const style = {
@@ -30,33 +26,47 @@ const style = {
   p: 4,
 };
 
-export function BasicModal({ path, httpMethod, createEntity, updateEntity }: BasicModalProps) {
+export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const { handleSubmit, register } = useForm();
-  const { create, update } = useContext(CrudContext);
+  const { create, update, remove } = useContext(CrudContext);
 
-  const createEntityProperties = Object.keys(createEntity);
-  
-  const editEntityProperties = Object.keys(updateEntity);
-  console.log("ISTO EH UPDATE ENTITY", updateEntity)
-  console.log("ISTO EH EDIT ENTITY PROPS", editEntityProperties)
+  const entityProperties = httpMethod === 'post' ? Object.keys(entityProps): Object.keys({id: '', ...entityProps, });
 
 
 
   async function handleCreateOrUpdate (data: any){
     if(httpMethod === 'post'){
+
         await create(path, data);
-        handleClose();
-
-    } else if ( httpMethod === 'update'){
-        await update(`${path}`, data, updateEntity.id);
 
         handleClose();
 
-    } else {
+        window.location.reload()
+      
+        return;
+    } else if ( httpMethod === 'put'){
+
+
+      const response = await update(path, data, data.id);
+
+
+        handleClose();
+
+        window.location.reload()
+
+        return;
+
+    } else if (httpMethod === 'delete'){
+        await remove(`${path}`, data.id);
+
+        handleClose();
+        window.location.reload()
+
+
         return;
     }
 
@@ -65,7 +75,7 @@ export function BasicModal({ path, httpMethod, createEntity, updateEntity }: Bas
 
   return (
     <div>
-      <Button onClick={handleOpen}><Add /></Button>
+      <Button onClick={handleOpen}>{httpMethod === 'post'? <AddCircle color="info" /> : httpMethod === 'put'? <Edit color="warning"/>: <Delete color="error"/>} </Button>
       
       <Modal
         open={open}
@@ -84,7 +94,7 @@ export function BasicModal({ path, httpMethod, createEntity, updateEntity }: Bas
             >
                 <h1 style={{ textAlign: "center"}}>{path}</h1>
                 {httpMethod === 'post'? (
-                    createEntityProperties.map((prop, index) => (
+                    entityProperties.map((prop, index) => (
                         <TextField 
                             {...register(prop)}
                             id={prop}
@@ -94,9 +104,9 @@ export function BasicModal({ path, httpMethod, createEntity, updateEntity }: Bas
                             label={`Insert your ${prop}`}
                         />
                     )) 
-                ) : httpMethod === 'update' ? (
+                ) : httpMethod === 'put' ? (
 
-                    editEntityProperties.map((prop, index) => (
+                    entityProperties.map((prop, index) => (
                         <TextField 
                             {...register(prop)}
                             id={prop}
@@ -107,7 +117,15 @@ export function BasicModal({ path, httpMethod, createEntity, updateEntity }: Bas
                         />
                     )) 
 
-                ): ( <h1>Error</h1>)}
+                ): httpMethod === 'delete' ? (
+                <TextField 
+                  {...register('id')}
+                  id='id'
+                  name='id'
+                  type="text"
+                  required
+                  label={`Insert your id`}
+              /> ): (<h1>Method not allowed</h1>)}
 
                 <Button variant="contained" type="submit">{httpMethod}</Button>
 

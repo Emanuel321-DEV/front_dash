@@ -100,7 +100,7 @@ export function Ticket (){
                 }
             }}>
                 
-                <Table pathName="ticket" createEntity={{ createdBy: '', receivedBy: '', status: '', local: ''}}/>
+                <Table pathName="ticket" entityProps={{ createdBy: '', receivedBy: '', status: '', local: ''}}/>
 
                 <Box display={{
                     sx: 'none',

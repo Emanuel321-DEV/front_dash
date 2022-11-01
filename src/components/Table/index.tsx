@@ -10,11 +10,11 @@ import { TableStyle } from "./style";
 
 interface TableProps {
     pathName: string;
-    createEntity: any;
+    entityProps: any;
 };
 
 
-export function Table({ pathName, createEntity }: TableProps ){
+export function Table({ pathName, entityProps }: TableProps ){
 
 
     const { listAll } = useContext(CrudContext);
@@ -32,7 +32,7 @@ export function Table({ pathName, createEntity }: TableProps ){
     }, []) 
 
     return (
-        <Box>
+        <Box sx={{width: { xs: "90%" } }}>
 
             <TableStyle>
          
@@ -40,11 +40,11 @@ export function Table({ pathName, createEntity }: TableProps ){
                   <div className='logo'>
                     <Business  color="primary"/>
                     <p>{pathName}</p>
-                    <BasicModal path={pathName} httpMethod="post" createEntity={createEntity} updateEntity='' />
+                    <BasicModal path={pathName} httpMethod="post" entityProps={entityProps} />
 
-                    <BasicModal path={pathName} httpMethod="update" createEntity={createEntity} updateEntity="any" />
+                    <BasicModal path={pathName} httpMethod="put" entityProps={entityProps} />
                     
-                    <BasicModal path={pathName} httpMethod="delete" createEntity={createEntity} updateEntity="any" />
+                    <BasicModal path={pathName} httpMethod="delete" entityProps={entityProps}/>
 
                   </div>
         

@@ -8,7 +8,7 @@ interface CrudContextProps {
     create: (path: string, body: object) => Promise<any>;
     listAll: (path: string ) => Promise<any>;
     listOne: (path: string, id: string ) => Promise<any>;
-    update: (path: string, body: object,  id: string ) => Promise<any>;
+    update: (path: string, body: object, id: string) => Promise<any>;
     remove: (path: string, id: string) => Promise<any>;
 }
 
@@ -86,10 +86,13 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
     
     }
     
-    async function update (path: string, body: object, id: string){
+    async function update (path: string, body: any, id: string){
         
         try{
-            
+
+            const bodyRequest = delete body.id;
+
+
             const response = await api.put(`${path}/${id}`, body);
 
             const data = await response.data;

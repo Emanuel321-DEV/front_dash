@@ -100,7 +100,7 @@ export function Company (){
                 }
             }}>
 
-                <Table pathName="company" createEntity={{name: '', cnpj: '', description: ''}}/>
+                <Table pathName="company" entityProps={{name: '', cnpj: '', description: ''}}/>
 
                 <Box display={{
                     sx: 'none',

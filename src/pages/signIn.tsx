@@ -27,7 +27,7 @@ export function SignIn (){
 
 
         if(token.status === 201){
-            history.push('/dashboard')
+            history.push('/company')
 
             window.location.reload()
 
