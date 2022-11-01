@@ -18,7 +18,6 @@ export function Table({ pathName, entityProps }: TableProps ){
 
 
     const { listAll } = useContext(CrudContext);
-
     const [ rows, setRows ]: any = useState([])
     const [columns, setColumns ]: any = useState([])
 
@@ -31,7 +30,7 @@ export function Table({ pathName, entityProps }: TableProps ){
     }, []) 
 
     return (
-        <Box sx={{width: { xs: "90%" } }}>
+        <Box sx={{width: { xs: "90%" }}}>
 
             <TableStyle>
          

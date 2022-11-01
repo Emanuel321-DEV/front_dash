@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const TableStyle = styled.div`
     
     height: 485px;
-    width: 100%;
+    width: 90%;
     margin-left: 5px;
     margin-top: 3px;
     @media (max-width: 1000px){

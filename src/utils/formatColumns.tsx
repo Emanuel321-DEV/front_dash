@@ -21,27 +21,7 @@ export async function formatColumns(data: any){
             }
             
             columns.push(object)
-        } else {
-            const object = {
-                field: 'options',
-                align: 'center',
-                width: 130,
-                renderCell: (cellValues: any) => {
-                  return (
-                    <Box display='flex' gap={0}>
-                    
-                      <Button > <Edit /> </Button> 
-                      <Button onClick={() => console.log("Clicou em exclude ", cellValues)}> <Delete color="error"/> </Button>
-                    
-                    </Box>
-      
-                  )
-                }
-            }
-
-            columns.push(object);
-
-        }
+        } 
 
 
     }

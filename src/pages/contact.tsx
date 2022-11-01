@@ -49,8 +49,8 @@ export function Contact (){
                     justifyContent: 'center',
                     gap: 5,
                     width: { 
-                        xs: '100%',
-                        sm: '100%',
+                        xs: '90%',
+                        sm: '90%',
                         md: '40%',
                         lg: '40%'
                     },
