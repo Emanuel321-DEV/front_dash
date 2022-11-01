@@ -40,14 +40,15 @@ export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
 
   async function handleCreateOrUpdate (data: any){
     if(httpMethod === 'post'){
+     
 
         await create(path, data);
 
         handleClose();
 
-        window.location.reload()
+        // window.location.reload()
       
-        return;
+        // return;
     } else if ( httpMethod === 'put'){
 
 
@@ -100,8 +101,8 @@ export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
                             id={prop}
                             name={prop}
                             type="text"
-                            required
-                            label={`Insert your ${prop}`}
+                            required={prop === 'company'? false: prop === 'local' ? false : true}
+                            label={prop === 'company'? `${prop} (optional)[FK]`: prop === 'local' ? `${prop} (optional)[FK]` : prop}
                         />
                     )) 
                 ) : httpMethod === 'put' ? (

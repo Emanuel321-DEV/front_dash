@@ -25,7 +25,11 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
 
         try {
 
+            console.log("EM CREATE")
             const response = await api.post(path, body);
+
+            console.log("RESPPONSE", response)
+
 
             const data = await response.data;
 
@@ -46,9 +50,8 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
 
             const response = await api.get(path);
 
-
-
             const data = await response.data;
+
 
             if(data[0] === undefined){
                 return { data: ['vazio'], columns: ['vazio'] };
@@ -56,6 +59,7 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
     
     
             const { columns } = await formatColumns(data);
+
             const { rows } = formatRows(path, data);
            
        

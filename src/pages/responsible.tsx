@@ -100,7 +100,7 @@ export function Responsible (){
                 }
             }}>
                 
-                <Table pathName="responsible" entityProps={{name: '', telephone: '', cep: '', houseNumber: ''}}/>
+                <Table pathName="responsible" entityProps={{name: '', telephone: '', cep: '', houseNumber: '', company: '', local: ''}}/>
 
                 <Box display={{
                     sx: 'none',

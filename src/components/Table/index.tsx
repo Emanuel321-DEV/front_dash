@@ -19,7 +19,6 @@ export function Table({ pathName, entityProps }: TableProps ){
 
     const { listAll } = useContext(CrudContext);
 
-    const isFetching = false;
     const [ rows, setRows ]: any = useState([])
     const [columns, setColumns ]: any = useState([])
 

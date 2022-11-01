@@ -23,13 +23,11 @@ export function SignUp (){
     const { create } = useContext(CrudContext);
 
     async function handleSignUp({ email, password }: any) {
-
+        
         const response = await create('user', { email, password });
 
-        const data = await response.data;
-
-        if(data){
-            history.push('/company')
+        if(response){
+            history.push('/')
 
             window.location.reload()
         }
@@ -116,8 +114,8 @@ export function SignUp (){
 
                         <footer>
                             <span className="signUp">
-                                Dont have account ? 
-                                <Link to="/signup"> SignUp in here! </Link> 
+                                Already have an account ? 
+                                <Link to="/"> SignIn in here! </Link> 
                             </span>
                         </footer>
                     </form>

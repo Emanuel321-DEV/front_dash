@@ -53,7 +53,8 @@ export function formatRows (pathName: string, data: any){
             rows = data;
             break;
         case 'local':
-            rows = data.map((local: LocalProps) => {                    
+            rows = data.map((local: any) => {                    
+            
                 return {
                     ...local,
                     company: `${local.company.name} - ${local.company.id}`
