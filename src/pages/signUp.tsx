@@ -8,7 +8,7 @@ import history from '../history'
 
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CrudContext } from "../contexts/ApiContext";
 
 
@@ -21,15 +21,26 @@ interface SignUpProps {
 export function SignUp (){
     const { register, handleSubmit } = useForm();
     const { create } = useContext(CrudContext);
+    const [ error, setError ] = useState(false)
 
     async function handleSignUp({ email, password }: any) {
         
-        const response = await create('user', { email, password });
+        try {
+            const response = await create('user', { email, password });
 
-        if(response){
-            history.push('/')
+            console.log(response);
 
-            window.location.reload()
+            if(response.email){
+                history.push('/')
+    
+                window.location.reload()
+            } else {
+                console.log('cai no else')
+                setError(true);
+            }
+            
+        } catch(error){
+            console.log(error);
         }
 
     }
@@ -38,8 +49,8 @@ export function SignUp (){
 
     return (
         <Box sx={{ display: 'flex', height: '100vh', padding: 0, margin: "auto", width : {
-            xs: '80%',
-            sm: '80%',
+            xs: '100%',
+            sm: '100%',
             md: '100%',
             lg: '100%'
         }}}> 
@@ -92,7 +103,9 @@ export function SignUp (){
                             type="email"
                             autoComplete="email"
                             required
-                            label="Insert your email" 
+                            label="Email" 
+                            error={error}
+                          
                         />
                         <TextField 
                             {...register('password')}
@@ -101,8 +114,9 @@ export function SignUp (){
                             type="password"
                             autoComplete="current-password"
                             required
-                            label="Insert your password"
-                        
+                            label="Password (Ex: 14Champions@)"
+                            error={error}
+                            helperText='Must contain Numbers, Uppercase, lowercase and special characters'
                         />
 
                         <Button variant="contained" type="submit">Create account</Button>
@@ -121,8 +135,14 @@ export function SignUp (){
                     </form>
 
                 </Box>
-                <Box sx={{
-                    display: 'flex',
+                <Box 
+                display={{
+                    xs: "none",
+                    sm: "none",
+                    md: "flex",
+                    lg: "flex"  
+                }}
+                sx={{
                     justifyContent: 'center',
                     background: '#6149DB',
                     width: {

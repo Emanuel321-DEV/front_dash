@@ -7,7 +7,7 @@ import history from '../history'
 
 import { Box } from "@mui/material";
 import { Link, Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 interface HandleSignInProps {
@@ -20,6 +20,9 @@ export function SignIn (){
     const { handleSubmit, register } = useForm();
     const { signIn } = useContext(AuthContext);
 
+    const [ error, setError ] = useState(false);
+    const [ message, setMessage ] = useState('')
+
     async function handleSignIn ({ email, password }: any){
 
         
@@ -27,15 +30,18 @@ export function SignIn (){
 
 
         if(token.status === 201){
-            history.push('/company')
+            history.push('/company');
 
-            window.location.reload()
+            window.location.reload();
 
         }
         else {
-            return <h1> ERROR </h1>
-        }
 
+            setError(true);
+            setMessage('Email or password incorrects')
+
+            return;
+        }
 
     }
 
@@ -82,6 +88,8 @@ export function SignIn (){
                             type="email"
                             autoComplete="email"
                             required
+                            error={error}
+                            helperText={message}
                             label="Insert your email" 
                         />
                         <TextField 
@@ -91,6 +99,7 @@ export function SignIn (){
                             type="password"
                             autoComplete="current-password"
                             required
+                            error={error}
                             label="Insert your password"
                         
                         />
@@ -111,7 +120,14 @@ export function SignIn (){
                     </form>
 
             </Box>
-            <Box sx={{
+            <Box 
+            display={{
+                xs: "none",
+                sm: "none",
+                md: "block",
+                lg: "block"  
+            }}
+            sx={{
                 width: {
                     xs: 0,
                     sm: 0,

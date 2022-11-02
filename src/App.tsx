@@ -4,7 +4,6 @@ import { ThemeProvider } from '@mui/material';
 import { Company } from './pages/company';
 import { Contact } from './pages/contact';
 import { Local } from './pages/local';
-import { Responsible } from './pages/responsible';
 import { SignIn } from './pages/signIn';
 import { SignUp } from './pages/signUp';
 import { Ticket } from './pages/ticket';
@@ -30,7 +29,6 @@ function App() {
             <Route path="/company" element={<Company />}></Route>
 
             <Route path="/local" element={<Local />}></Route>
-            <Route path="/responsible" element={<Responsible />}></Route>
             <Route path="/ticket" element={<Ticket />}></Route>
 
             <Route path="/contact" element={<Contact />}></Route>

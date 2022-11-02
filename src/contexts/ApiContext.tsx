@@ -27,7 +27,10 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
 
             if(path === 'company'){
 
+
+
                 let companyProps = body;
+
 
                 const responsible = {
                     name: body.responsibleName, 
@@ -96,12 +99,25 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
 
             } else if (path === 'ticket'){
                 
+                console.log("CREATE TICKET INTENT");
+
                 const ticketRequest = await api.post(path, body);
+
+                console.log("CREATE TICKET INTENT", ticketRequest);
 
                 const data = await ticketRequest.data;
 
+
+
                 return data;
 
+            } else {
+
+            
+                const user = await api.post(path, body);
+                const data = await user.data;
+                return data;
+                
             }
 
         } 
@@ -118,8 +134,11 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
         try {
 
             const response = await api.get(path);
+            console.log("ESTE EH O response", response)
 
             const data = await response.data;
+
+            console.log("ESTE EH O DATA", data)
 
             if(data[0] === undefined){
                 return { data: ['vazio'], columns: ['vazio'] };
@@ -162,38 +181,127 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
 
             if(path === 'company'){
 
-                let companyProps = body;
+                let companyProps = {...body } ;
 
                 delete companyProps.responsibleName
                 delete companyProps.responsibleCep
                 delete companyProps.responsiblePhone
                 delete companyProps.responsibleHouseNumber
+                delete companyProps.id
+
+
 
                 const companyRequest = await api.put(`${path}/${id}`, companyProps);
+                
                 const data = await companyRequest.data;
-    
+
+                const responsibleData = await (await api.get('responsible')).data;
+
+                console.log("PAROU AQUI", responsibleData)
+
+                const findResponsibleRelation = responsibleData.find((responsible: any) => {
+                
+                    console.log('ID', id, '===', responsible.company)
+
+                    return responsible.company ? responsible.company.id === id : false;
+
+                })
+
+                const responsibleRequest = await api.put(`responsible/${findResponsibleRelation.id}`, {
+                    name: body.responsibleName,
+                    telephone: body.responsiblePhone,
+                    cep: body.responsibleCep,
+                    houseNumber: body.responsibleHouseNumber,
+                    company: data.id
+                })
+
+                
+                console.log("RESPONSIBLE REQUEST", responsibleRequest);
+
                 return data;
 
             } else if(path === 'local'){
 
-                let localProps = body;
+                let localProps = { ...body };
 
                 delete localProps.responsibleName
                 delete localProps.responsibleCep
                 delete localProps.responsiblePhone
                 delete localProps.responsibleHouseNumber
+                delete localProps.id
+
 
                 const localRequest = await api.put(`${path}/${id}`, localProps);
                 const data = await localRequest.data;
-    
+
+
+                const responsibleData = await (await api.get('responsible')).data;
+
+                console.log("PAROU AQUI", responsibleData)
+
+                const findResponsibleRelation = responsibleData.find((responsible: any) => {
+                
+                    console.log('ID', id, '===', responsible.local)
+
+                    return responsible.local ? responsible.local.id === id : false;
+
+                })
+
+                const responsibleRequest = await api.put(`responsible/${findResponsibleRelation.id}`, {
+                    name: body.responsibleName,
+                    telephone: body.responsiblePhone,
+                    cep: body.responsibleCep,
+                    houseNumber: body.responsibleHouseNumber,
+                    local: data.id
+                })
+
+                console.log("RESPONSIBLE REQ", responsibleRequest)
+
+
+                const ticketRequest = await (await api.get(`ticket`)).data;
+
+                const findTicketRelation = ticketRequest.find((ticket: any) => ticket.local.id === id);
+
+                console.log("FIND TICKET RELATION", findTicketRelation);
+
+                if(findTicketRelation && String(findTicketRelation.status).toUpperCase() === 'CONCLUÍDO' ){
+                   
+                    const ticketRequest = await (await api.post(`ticket`, { 
+                        createdBy: 'empty',
+                        receivedBy: 'empty',
+                        status: 'PENDENTE',
+                        local: data.id
+                    })).data;
+
+                    console.log("TICKET REQUEST POST", ticketRequest)
+
+                
+                } else if (findTicketRelation && String(findTicketRelation.status).toUpperCase() !== 'CONCLUÍDO') {
+                    
+                    const ticketRequest = await (await api.put(`ticket/${findTicketRelation.id}`, {
+                        createdBy: findTicketRelation.createdBy,
+                        receivedBy: findTicketRelation.receivedBy,
+                        status: findTicketRelation.status,
+                        local: data.id
+                    })).data;
+
+                    console.log("TICKET REQUEST PUT", ticketRequest)
+                }
+
                 return data;
 
             } else if (path === 'ticket'){
                 
-                const ticketRequest = await api.post(path, body);
+                console.log("BODY ENVIADO PRO TICKET", body)
 
+                delete body.id;
+
+                const ticketRequest = await api.put(`${path}/${id}`, body);
+
+                
                 const data = await ticketRequest.data;
-
+                console.log("RESPONSE DATA", data);
+                
                 return data;
 
             }

@@ -17,7 +17,7 @@ export async function formatColumns(data: any){
             const object = {
                 field: keys[index],
                 headerName: keys[index],
-                width: 150,
+                width: 350,
             }
             
             columns.push(object)

@@ -87,16 +87,14 @@ export function Local (){
 
             <Box sx={{
                 display: 'flex',
-                justifyContent: 'space-evenly',
+                justifyContent: 'space-around',
                 alignItems: 'center',
                 margin: '0 auto',
                 width: {
-                    xs: '100%',
-                    sm: '100%',
-                    md: '100%',
-                    lg: '100%',
-
-
+                    xs: '90%',
+                    sm: '90%',
+                    md: '85%',
+                    lg: '85%',
                 }
             }}>
                 

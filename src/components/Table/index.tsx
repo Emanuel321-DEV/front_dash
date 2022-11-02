@@ -1,5 +1,5 @@
 
-import { Business, Add } from "@mui/icons-material";
+import { Business, Map, ConfirmationNumber } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import { useContext, useEffect, useState } from "react";
@@ -26,7 +26,7 @@ export function Table({ pathName, entityProps }: TableProps ){
             setRows(response.rows);
             setColumns(response.columns)        
         } );
- 
+        
     }, []) 
 
     return (
@@ -36,7 +36,8 @@ export function Table({ pathName, entityProps }: TableProps ){
          
                 <div className='header-table'>
                   <div className='logo'>
-                    <Business  color="primary"/>
+                    {pathName === 'company' ? <Business  color="primary"/> : pathName === 'local' ? <Map color="primary"/>: <ConfirmationNumber color="primary"/>}
+                    
                     <p>{pathName}</p>
                     <BasicModal path={pathName} httpMethod="post" entityProps={entityProps} />
 

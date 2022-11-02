@@ -78,7 +78,7 @@ export function formatRows (pathName: string, data: any){
             rows = data.map((ticket: TicketProps) => {                    
                 return {
                     ...ticket,
-                    local: `${ticket.local.name} - ${ticket.local.id}`,
+                    local: ticket.local ?  `${ticket.local.name} - ${ticket.local.id}`: 'vazio',
                 }
             })
 

@@ -95,8 +95,6 @@ export function Company (){
                     sm: '90%',
                     md: '85%',
                     lg: '85%',
-
-
                 }
             }}>
 

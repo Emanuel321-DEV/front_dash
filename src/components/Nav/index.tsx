@@ -1,8 +1,6 @@
 import DeckIcon from "@mui/icons-material/Deck";
-import DashboardIcon from '@mui/icons-material/DashboardOutlined';
 import BusinessIcon from '@mui/icons-material/BusinessOutlined';
 import MapIcon from '@mui/icons-material/MapOutlined';
-import PeopleIcon from '@mui/icons-material/PeopleAltOutlined';
 import ConfirmationNumber from '@mui/icons-material/ConfirmationNumberOutlined'
 import Divider from "@mui/material/Divider";
 import ContactPageIcon from "@mui/icons-material/ContactPageOutlined";
@@ -43,12 +41,6 @@ export function Nav ({ display }: NavProps){
                                 </Link>
                             </li>
                             
-                            <li> 
-                                <Link className="nav-link" to="/responsible"> 
-                                    <PeopleIcon className="nav-icon" color="secondary"/> <h3>Responsibles</h3>
-                                
-                                </Link>
-                            </li>
 
                             <li>  
                                 <Link className="nav-link" to="/ticket"> 

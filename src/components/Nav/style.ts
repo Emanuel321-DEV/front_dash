@@ -19,7 +19,7 @@ export const Content = styled.div`
     
     height: 100%;
 
-    justify-content: space-between;
+    justify-content: space-around;
 
     @media (max-width: 1000px){
         justify-content: initial;

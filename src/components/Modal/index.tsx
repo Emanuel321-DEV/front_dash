@@ -44,11 +44,11 @@ export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
     if(httpMethod === 'post'){
      
 
-        await create(path, data);
+      await create(path, data);
 
-        // handleClose();
+      handleClose();
 
-        // window.location.reload()
+      window.location.reload()
       
         return;
     } else if ( httpMethod === 'put'){
@@ -101,10 +101,11 @@ export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
                         <TextField 
                             {...register(prop)}
                             id={prop}
+                            key={prop}
                             name={prop}
                             type="text"
                             required={prop === 'company'? false: prop === 'local' ? false : true}
-                            label={prop === 'company'? `${prop} [FK]`: prop === 'local' ? `${prop} [FK]` : prop}
+                            label={prop === 'company'? `${prop} [FK (some UUID)]`: prop === 'local' ? `${prop} [FK (some UUID)]` : prop}
                         />
                     )) 
                 ) : httpMethod === 'put' ? (
@@ -112,11 +113,12 @@ export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
                     entityProperties.map((prop, index) => (
                         <TextField 
                         {...register(prop)}
+                        key={prop}
                         id={prop}
                         name={prop}
                         type="text"
                         required={prop === 'company'? false: prop === 'local' ? false : true}
-                        label={prop === 'company'? `${prop} [FK]`: prop === 'local' ? `${prop} [FK]` : prop}
+                        label={prop === 'company'? `${prop} [FK (some UUID) ]`: prop === 'local' ? `${prop} [FK (some UUID)]` : prop}
                       />
                     )) 
 
