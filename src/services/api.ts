@@ -17,9 +17,9 @@ api.interceptors.response.use((response)=> {
 
     console.log("este eh o erro amigo", error.response.data)
 
-    localStorage.removeItem('react-auth-token')
+    // localStorage.removeItem('react-auth-token')
 
-    history.push('/');
-    window.location.reload();
+    // history.push('/');
+    // window.location.reload();
 
 })

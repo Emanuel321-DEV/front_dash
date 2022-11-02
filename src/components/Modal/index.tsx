@@ -20,10 +20,12 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: { xs: 250, sm: 400, md: 400, lg: 400 },
+  maxHeight: '90%',
   bgcolor: 'background.paper',
   border: '1px solid #000',
   boxShadow: 24,
   p: 4,
+  overflowY: 'scroll'
 };
 
 export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
@@ -44,11 +46,11 @@ export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
 
         await create(path, data);
 
-        handleClose();
+        // handleClose();
 
         // window.location.reload()
       
-        // return;
+        return;
     } else if ( httpMethod === 'put'){
 
 
@@ -102,20 +104,20 @@ export function BasicModal({ path, httpMethod, entityProps }: BasicModalProps) {
                             name={prop}
                             type="text"
                             required={prop === 'company'? false: prop === 'local' ? false : true}
-                            label={prop === 'company'? `${prop} (optional)[FK]`: prop === 'local' ? `${prop} (optional)[FK]` : prop}
+                            label={prop === 'company'? `${prop} [FK]`: prop === 'local' ? `${prop} [FK]` : prop}
                         />
                     )) 
                 ) : httpMethod === 'put' ? (
 
                     entityProperties.map((prop, index) => (
                         <TextField 
-                            {...register(prop)}
-                            id={prop}
-                            name={prop}
-                            type="text"
-                            required
-                            label={`Insert your ${prop}`}
-                        />
+                        {...register(prop)}
+                        id={prop}
+                        name={prop}
+                        type="text"
+                        required={prop === 'company'? false: prop === 'local' ? false : true}
+                        label={prop === 'company'? `${prop} [FK]`: prop === 'local' ? `${prop} [FK]` : prop}
+                      />
                     )) 
 
                 ): httpMethod === 'delete' ? (

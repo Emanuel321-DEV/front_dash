@@ -100,7 +100,7 @@ export function Local (){
                 }
             }}>
                 
-                <Table pathName="local" entityProps={{name: '', cep: '', houseNumber: '', company: '' }}/>     
+                <Table pathName="local" entityProps={{name: '', cep: '', houseNumber: '', company: '', responsibleName: '', responsiblePhone: '', responsibleCep: '', responsibleHouseNumber: '' }}/>     
 
                 <Box display={{
                     sx: 'none',

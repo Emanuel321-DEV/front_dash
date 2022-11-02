@@ -26,7 +26,7 @@ export function Table({ pathName, entityProps }: TableProps ){
             setRows(response.rows);
             setColumns(response.columns)        
         } );
-    
+ 
     }, []) 
 
     return (

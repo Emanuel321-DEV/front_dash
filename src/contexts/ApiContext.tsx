@@ -21,19 +21,88 @@ export const CrudContext = createContext({} as CrudContextProps);
 
 export function CrudContextProvider ({ children }: CrudContextProviderProps){
 
-    async function create (path: string, body: object){
+    async function create (path: string, body: any){
 
         try {
 
-            console.log("EM CREATE")
-            const response = await api.post(path, body);
+            if(path === 'company'){
 
-            console.log("RESPPONSE", response)
+                let companyProps = body;
+
+                const responsible = {
+                    name: body.responsibleName, 
+                    cep: body.responsibleCep,
+                    telephone: body.responsiblePhone, 
+                    houseNumber: body.responsibleHouseNumber,
+                }
+                console.log("ESTE EH O BODY", body)
+                console.log("ESTE EH O RESPONSIBLE", responsible)
 
 
-            const data = await response.data;
+                delete companyProps.responsibleName
+                delete companyProps.responsibleCep
+                delete companyProps.responsiblePhone
+                delete companyProps.responsibleHouseNumber
 
-            return data;
+                const companyRequest = await api.post(path, companyProps);
+                const data = await companyRequest.data;
+
+                console.log("este eh CoMPANY data \n\n\n\n\n\n", data)
+
+
+                const responsibleProps = {
+                    ...responsible,
+                    company: data.id,
+                }
+
+                console.log("ESTE EH O RESPONSIBLE BODY", responsible)
+
+                const responsibleRequest = await api.post('responsible', responsibleProps);
+                
+                console.log("este eh RESPONSIBLE data \n\n\n\n\n\n", responsibleRequest)
+    
+                return data;
+
+            } else if(path === 'local'){
+
+                let localProps = body;
+                
+                const responsible = {
+                    name: body.responsibleName, 
+                    cep: body.responsibleCep,
+                    telephone: body.responsiblePhone, 
+                    houseNumber: body.responsibleHouseNumber,
+                }
+                
+                delete localProps.responsibleName
+                delete localProps.responsibleCep
+                delete localProps.responsiblePhone
+                delete localProps.responsibleHouseNumber
+
+                const localRequest = await api.post(path, localProps);
+                const data = await localRequest.data;
+
+
+                console.log("local data", data)
+
+                const responsibleProps = {
+                    ...responsible,
+                    local: data.id,
+                }
+
+                const responsibleRequest = await api.post('responsible', responsibleProps);
+    
+                return data;
+
+            } else if (path === 'ticket'){
+                
+                const ticketRequest = await api.post(path, body);
+
+                const data = await ticketRequest.data;
+
+                return data;
+
+            }
 
         } 
         catch (error){
@@ -52,7 +121,6 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
 
             const data = await response.data;
 
-
             if(data[0] === undefined){
                 return { data: ['vazio'], columns: ['vazio'] };
             }
@@ -61,9 +129,7 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
             const { columns } = await formatColumns(data);
 
             const { rows } = formatRows(path, data);
-           
-       
-    
+               
             return {rows, columns};
 
         } 
@@ -94,15 +160,43 @@ export function CrudContextProvider ({ children }: CrudContextProviderProps){
         
         try{
 
-            const bodyRequest = delete body.id;
+            if(path === 'company'){
 
+                let companyProps = body;
 
-            const response = await api.put(`${path}/${id}`, body);
+                delete companyProps.responsibleName
+                delete companyProps.responsibleCep
+                delete companyProps.responsiblePhone
+                delete companyProps.responsibleHouseNumber
 
-            const data = await response.data;
+                const companyRequest = await api.put(`${path}/${id}`, companyProps);
+                const data = await companyRequest.data;
+    
+                return data;
 
+            } else if(path === 'local'){
 
-            return data;
+                let localProps = body;
+
+                delete localProps.responsibleName
+                delete localProps.responsibleCep
+                delete localProps.responsiblePhone
+                delete localProps.responsibleHouseNumber
+
+                const localRequest = await api.put(`${path}/${id}`, localProps);
+                const data = await localRequest.data;
+    
+                return data;
+
+            } else if (path === 'ticket'){
+                
+                const ticketRequest = await api.post(path, body);
+
+                const data = await ticketRequest.data;
+
+                return data;
+
+            }
 
         } 
         catch (error){
