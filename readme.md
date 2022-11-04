@@ -3,6 +3,14 @@
 Olá a todos, este projeto foi um desafio proposto pela empresa hublocal. Nele, criei um dashboard simples que conecta com uma api Nestjs.
 Entre as funcionalidades estão: 
 
+## Get started
+    - 1 Clone o repositorio
+    - 2 yarn (Para instalar as dependencias)
+    - 3 O programa depende de uma api backend, assim, crie um arquivo .env com a variavel de nome: REACT_APP_API_BASEURL, e nela insira o caminho da api. 
+        Exemplo: REACT_APP_API_BASEURL=https://backendashboard.herokuapp.com
+    - 4 yarn start (Para inicializar o projeto)
+
+
 ## Criação de um usuário (SIGNUP)
     - Informar um email com formato válido: Ex: emanuel@gmail.com
     - Informar uma senha forte: Deve conter números, letras maiúsculas, minúsculas e caracter especial: Exemplo: 18Champions@
